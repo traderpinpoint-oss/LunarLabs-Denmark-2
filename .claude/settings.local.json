@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(npm run dev)",
+      "PowerShell(pnpm add gsap @gsap/react)",
+      "PowerShell(npm install gsap @gsap/react)",
+      "PowerShell($line = \\(Get-Content \"e:\\\\vercel\\\\components\\\\scroll-hero.tsx\" -Encoding utf8\\)[31]; $line.ToCharArray\\(\\) | ForEach-Object { [int][char]$_ } | Where-Object { $_ -gt 127 -or $_ -eq 32 } | Group-Object | Select-Object Name, Count; $line)",
+      "PowerShell($line = \\(Get-Content \"e:\\\\vercel\\\\components\\\\scroll-hero.tsx\" -Encoding utf8\\)[31]; $idx = $line.IndexOf\\([char]160\\); \"nbsp at index $idx\"; \"quote positions: \" + \\(\\($line.ToCharArray\\(\\) | ForEach-Object -Begin {$i=0} -Process { if \\($_ -eq \"'\"\\) { $i }; $i++ }\\) -join ', '\\))",
+      "PowerShell(npm run build)",
+      "PowerShell(npx tsc --noEmit)",
+      "PowerShell(npm run start)",
+      "PowerShell($ok = $false; foreach \\($i in 1..10\\) { try { $r = Invoke-WebRequest -Uri \"http://localhost:3000\" -UseBasicParsing -TimeoutSec 5; $ok = $true; break } catch { Start-Sleep -Milliseconds 800 } }; if \\($ok\\) { \"STATUS: $\\($r.StatusCode\\)\"; $html = $r.Content; foreach \\($needle in @\\('located in the heart of DENMARK', 'Creative design agency', 'js-heart-svg', 'js-microchar', 'New project?', 'Trustpilot'\\)\\) { if \\($html.Contains\\($needle\\)\\) { \"FOUND: $needle\" } else { \"MISSING: $needle\" } } } else { \"server not reachable\" })",
+      "PowerShell($candidates = @\\(\"$env:ProgramFiles\\\\Git\\\\cmd\\\\git.exe\", \"${env:ProgramFiles\\(x86\\)}\\\\Git\\\\cmd\\\\git.exe\", \"$env:LOCALAPPDATA\\\\Programs\\\\Git\\\\cmd\\\\git.exe\"\\); foreach \\($c in $candidates\\) { if \\(Test-Path $c\\) { Write-Output \"FOUND: $c\" } })"
+    ]
+  }
+}
