@@ -1,16 +1,26 @@
+import { Kinetic } from '@/components/kinetic'
+
 export function SiteFooter() {
   return (
     <footer className="dark overflow-hidden bg-background pt-24 text-foreground md:pt-32">
       {/* CTA */}
-      <div className="mx-auto max-w-6xl px-4 text-center md:px-6">
-        <h2 className="font-display text-6xl font-bold tracking-tighter text-balance md:text-8xl">
+      <Kinetic className="mx-auto max-w-6xl px-4 text-center md:px-6">
+        <h2
+          data-k="0"
+          data-kscale="0.95"
+          data-ky="20"
+          className="font-display text-6xl font-bold tracking-tighter text-balance md:text-8xl"
+        >
           Ready when <span className="text-accent">you are.</span>
         </h2>
-        <p className="mx-auto mt-6 max-w-xl leading-relaxed text-muted-foreground text-pretty">
+        <p
+          data-k="0.6"
+          className="mx-auto mt-6 max-w-xl leading-relaxed text-muted-foreground text-pretty"
+        >
           Tell us about your project and we&apos;ll come back with a clear, honest quote — no
           pressure, no jargon, no surprises.
         </p>
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+        <div data-k="1.2" className="mt-10 flex flex-wrap items-center justify-center gap-3">
           <a
             href="mailto:Sm1992@outlook.dk"
             className="rounded-full bg-accent px-8 py-4 text-sm font-semibold text-accent-foreground transition-opacity hover:opacity-85"
@@ -24,7 +34,7 @@ export function SiteFooter() {
             Sm1992@outlook.dk
           </a>
         </div>
-      </div>
+      </Kinetic>
 
       {/* Footer grid */}
       <div className="mx-auto mt-24 grid max-w-6xl gap-10 border-t border-border px-4 py-14 sm:grid-cols-3 md:px-6">
@@ -71,16 +81,24 @@ export function SiteFooter() {
         </nav>
       </div>
 
-      {/* Giant wordmark, mirrored beneath a faint waterline */}
-      <div className="pointer-events-none text-center select-none" aria-hidden="true">
-        <div className="font-display text-[15.5vw] leading-none font-bold tracking-tighter whitespace-nowrap text-foreground/20">
-          LUNARLABS
+      {/* Giant wordmark, mirrored beneath a faint waterline — the wordmark and
+          its reflection drift at different parallax rates for depth */}
+      <Kinetic>
+        <div className="pointer-events-none text-center select-none" aria-hidden="true">
+          <div
+            data-parallax="12"
+            className="font-display text-[15.5vw] leading-none font-bold tracking-tighter whitespace-nowrap text-foreground/20"
+          >
+            LUNARLABS
+          </div>
+          <div className="mx-auto h-px w-1/2 bg-accent/20" />
+          <div data-parallax="5" className="-mb-[3vw]">
+            <div className="wordmark-reflection font-display text-[15.5vw] leading-none font-bold tracking-tighter whitespace-nowrap text-foreground/20">
+              LUNARLABS
+            </div>
+          </div>
         </div>
-        <div className="mx-auto h-px w-1/2 bg-accent/20" />
-        <div className="wordmark-reflection -mb-[3vw] font-display text-[15.5vw] leading-none font-bold tracking-tighter whitespace-nowrap text-foreground/20">
-          LUNARLABS
-        </div>
-      </div>
+      </Kinetic>
 
       <div className="border-t border-border">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-6 text-xs tracking-widest text-muted-foreground uppercase sm:flex-row sm:justify-between md:px-6">

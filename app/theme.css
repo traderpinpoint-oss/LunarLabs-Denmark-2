@@ -24,6 +24,7 @@
   --color-foreground: var(--foreground);
   --color-background: var(--background);
   --color-coral: oklch(0.66 0.22 34);
+  --color-navy: oklch(0.32 0.08 255);
   --font-sans: var(--font-body), system-ui, sans-serif;
   --font-display: var(--font-heading), system-ui, sans-serif;
   --radius-sm: calc(var(--radius) * 0.6);
@@ -141,6 +142,157 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .animate-pill-pulse {
+    animation: none;
+  }
+}
+
+/* Layered accent glow for the active service description panel — a stack of
+   shadows at increasing blur radii breathing on a ~2s loop. The -flash
+   variant surges brighter first, then settles into the same pulse; JS
+   re-triggers it whenever the active service changes. */
+@keyframes glow-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 10px oklch(0.72 0.17 55 / 0.45),
+      0 0 28px oklch(0.72 0.17 55 / 0.32),
+      0 0 64px oklch(0.72 0.17 55 / 0.2);
+  }
+  50% {
+    box-shadow:
+      0 0 16px oklch(0.72 0.17 55 / 0.7),
+      0 0 44px oklch(0.72 0.17 55 / 0.5),
+      0 0 96px oklch(0.72 0.17 55 / 0.32);
+  }
+}
+@keyframes glow-flash {
+  0% {
+    box-shadow:
+      0 0 22px oklch(0.72 0.17 55 / 0.95),
+      0 0 60px oklch(0.72 0.17 55 / 0.7),
+      0 0 130px oklch(0.72 0.17 55 / 0.5);
+  }
+  100% {
+    box-shadow:
+      0 0 10px oklch(0.72 0.17 55 / 0.45),
+      0 0 28px oklch(0.72 0.17 55 / 0.32),
+      0 0 64px oklch(0.72 0.17 55 / 0.2);
+  }
+}
+.service-glow {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+/* glow-flash must come LAST: with several animations on one property the
+   final list entry wins, and glow-pulse never restarts (it persists from
+   .service-glow), so listed later it would mask the flash entirely. */
+.service-glow-flash {
+  animation:
+    glow-pulse 2s ease-in-out infinite,
+    glow-flash 0.6s ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .service-glow,
+  .service-glow-flash {
+    animation: none;
+    box-shadow:
+      0 0 10px oklch(0.72 0.17 55 / 0.45),
+      0 0 28px oklch(0.72 0.17 55 / 0.32),
+      0 0 64px oklch(0.72 0.17 55 / 0.2);
+  }
+}
+
+/* Continuous neon-sign flicker for the contact wordmark — mostly steady with
+   two brief stutter bursts per cycle so it feels alive, not strobing */
+@keyframes neon-flicker {
+  0%,
+  6% {
+    opacity: 1;
+  }
+  7% {
+    opacity: 0.45;
+  }
+  8% {
+    opacity: 1;
+  }
+  9.5% {
+    opacity: 0.3;
+  }
+  11% {
+    opacity: 1;
+  }
+  13% {
+    opacity: 0.75;
+  }
+  14%,
+  56% {
+    opacity: 1;
+  }
+  57% {
+    opacity: 0.5;
+  }
+  58.5% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 0.8;
+  }
+  61%,
+  100% {
+    opacity: 1;
+  }
+}
+.animate-neon-flicker {
+  animation: neon-flicker 4.8s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-neon-flicker {
+    animation: none;
+  }
+}
+
+/* Idle wobble for the services mindmap pills — on an inner wrapper so it
+   composes with the centering translate + GSAP entrance on the outer node.
+   Each node staggers its delay/duration inline so they drift out of sync. */
+@keyframes mm-wobble {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-3px) rotate(1.2deg);
+  }
+  50% {
+    transform: translateY(1px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-2px) rotate(-1.2deg);
+  }
+}
+.animate-mm-wobble {
+  animation: mm-wobble 4s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-mm-wobble {
+    animation: none;
+  }
+}
+
+/* Gentle continuous bob for the hero heart — lives on its own wrapper so it
+   composes with the GSAP rotation/scroll transforms on the elements around it */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}
+.animate-float {
+  animation: float 5.5s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-float {
     animation: none;
   }
 }

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Menu, X } from 'lucide-react'
+import { ArrowRight, Menu, X } from 'lucide-react'
 
 const links = [
   { href: '#services', label: 'Services' },
@@ -35,9 +35,13 @@ export function SiteHeader() {
         <div className="flex items-center gap-2">
           <a
             href="mailto:Sm1992@outlook.dk"
-            className="hidden rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-85 md:inline-block"
+            className="group hidden items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-85 md:inline-flex"
           >
             Start a project
+            <ArrowRight
+              className="size-4 transition-transform duration-300 ease-out group-hover:translate-x-1"
+              aria-hidden="true"
+            />
           </a>
           <button
             type="button"
@@ -66,9 +70,10 @@ export function SiteHeader() {
             ))}
             <a
               href="mailto:Sm1992@outlook.dk"
-              className="mt-2 rounded-full bg-primary px-5 py-3 text-center text-sm font-semibold text-primary-foreground"
+              className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-3 text-center text-sm font-semibold text-primary-foreground"
             >
               Start a project
+              <ArrowRight className="size-4" aria-hidden="true" />
             </a>
           </nav>
         </div>

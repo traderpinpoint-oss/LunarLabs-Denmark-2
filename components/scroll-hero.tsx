@@ -49,6 +49,9 @@ export function ScrollHero() {
            shadow — scrolling resolves it upright and lifts it off the page.
            Without JS (or with reduced motion) the static upright mark renders. */
         gsap.set('.js-heart', { rotation: 45, filter: HEART_SHADOW_REST })
+        /* The headline rests muted and the scrub sweeps it to solid ink as
+           one unit. Opacity over the cream background reads as muted gray. */
+        gsap.set('.js-headline', { opacity: 0.2 })
 
         // Entrance — plays once on load
         gsap
@@ -62,7 +65,9 @@ export function ScrollHero() {
           .from('.js-guides', { opacity: 0, duration: 1.2, ease: 'power2.inOut' }, 0.55)
           .from('.js-corner', { y: 26, opacity: 0, duration: 0.9, stagger: 0.12 }, 0.75)
 
-        // Scroll choreography — stage pins for 120vh while the scrub plays
+        // Scroll choreography — stage pins for 120vh while the scrub plays.
+        // Phase 1 (0 → 0.7): the whole headline sweeps from muted to solid ink.
+        // Phase 2 (0.75 → 1.2): the headline recedes while the heart keeps rising.
         gsap
           .timeline({
             defaults: { ease: 'none' },
@@ -76,7 +81,17 @@ export function ScrollHero() {
               invalidateOnRefresh: true,
             },
           })
-          .to('.js-headline', { opacity: 0.15, scale: 0.95, transformOrigin: '50% 45%' }, 0)
+          .to('.js-headline', { opacity: 1, duration: 0.7 }, 0)
+          .to(
+            '.js-headline',
+            { opacity: 0.15, scale: 0.95, transformOrigin: '50% 45%', duration: 0.45 },
+            0.75,
+          )
+          // the two lines shear apart as the headline recedes (kinetic drift)
+          .to('.js-linewrap-a', { xPercent: -3, skewX: -2.5, duration: 0.45 }, 0.75)
+          .to('.js-linewrap-b', { xPercent: 3, skewX: 2.5, duration: 0.45 }, 0.75)
+          // background guides sink slower than the receding content — depth
+          .to('.js-guides', { y: () => window.innerHeight * 0.06, duration: 1.2 }, 0)
           .to(
             '.js-heart',
             {
@@ -85,10 +100,17 @@ export function ScrollHero() {
               // 0.3x parallax of the 120vh pin distance
               y: () => window.innerHeight * -0.36,
               filter: HEART_SHADOW_LIFTED,
+              // spans the whole timeline so the heart rises through both phases
+              duration: 1.2,
             },
             0,
           )
-          .fromTo('.js-guides', { opacity: 1 }, { opacity: 0.1, immediateRender: false }, 0)
+          .fromTo(
+            '.js-guides',
+            { opacity: 1 },
+            { opacity: 0.1, immediateRender: false, duration: 0.6 },
+            0,
+          )
           .to(
             '.js-microchar',
             { opacity: 0, y: -6, duration: 0.4, stagger: { each: 0.012, from: 'end' } },
@@ -131,10 +153,10 @@ export function ScrollHero() {
         <div className="relative flex flex-1 items-center px-5 md:px-10">
           <div className="relative w-full">
             <h1 className="js-headline font-display text-[clamp(2.5rem,5.3vw,6.5rem)] leading-[1.02] font-bold tracking-[-0.03em]">
-              <span className="block overflow-hidden pb-[0.06em]">
+              <span className="js-linewrap-a block overflow-hidden pb-[0.06em]">
                 <span className="js-line block">Creative design agency,</span>
               </span>
-              <span className="block overflow-hidden pb-[0.06em]">
+              <span className="js-linewrap-b block overflow-hidden pb-[0.06em]">
                 <span className="js-line block">located in the heart of DENMARK.</span>
               </span>
             </h1>
@@ -145,13 +167,15 @@ export function ScrollHero() {
               aria-label="A coral heart — go on, press it"
               className="js-heart absolute top-[-30%] left-[48%] z-10 w-[clamp(140px,21vw,300px)] cursor-pointer"
             >
-              <svg
-                className="js-heart-svg block h-auto w-full text-coral"
-                viewBox="0 0 96 96"
-                aria-hidden="true"
-              >
-                <path d="M48 88 L6 46 L27 25 L48 46 L69 25 L90 46 Z" fill="currentColor" />
-              </svg>
+              <span className="animate-float block">
+                <svg
+                  className="js-heart-svg block h-auto w-full text-coral"
+                  viewBox="0 0 96 96"
+                  aria-hidden="true"
+                >
+                  <path d="M48 88 L6 46 L27 25 L48 46 L69 25 L90 46 Z" fill="currentColor" />
+                </svg>
+              </span>
             </button>
           </div>
         </div>

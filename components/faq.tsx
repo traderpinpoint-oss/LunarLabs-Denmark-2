@@ -1,3 +1,5 @@
+import { Kinetic } from '@/components/kinetic'
+
 const faqs = [
   {
     q: 'How much will my website cost?',
@@ -28,15 +30,20 @@ const faqs = [
 export function Faq() {
   return (
     <section id="faq" className="py-24 md:py-32">
-      <div className="mx-auto grid max-w-6xl gap-12 px-4 md:grid-cols-12 md:px-6">
-        <h2 className="font-display text-5xl font-bold tracking-tight text-balance md:col-span-4 md:text-6xl">
+      <Kinetic className="mx-auto grid max-w-6xl gap-12 px-4 md:grid-cols-12 md:px-6">
+        <h2
+          data-k="0"
+          data-kx="-60"
+          data-kskew="6"
+          className="font-display text-5xl font-bold tracking-tight text-balance md:col-span-4 md:text-6xl"
+        >
           Questions, <span className="text-muted-foreground/50">answered.</span>
         </h2>
 
         <div className="md:col-span-8">
           <div className="divide-y divide-border border-y border-border">
-            {faqs.map((f) => (
-              <details key={f.q} className="group py-5">
+            {faqs.map((f, i) => (
+              <details key={f.q} data-k={0.8 + i * 0.3} data-ky="24" className="group py-5">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-lg font-semibold [&::-webkit-details-marker]:hidden">
                   {f.q}
                   <span
@@ -53,7 +60,7 @@ export function Faq() {
             ))}
           </div>
         </div>
-      </div>
+      </Kinetic>
     </section>
   )
 }

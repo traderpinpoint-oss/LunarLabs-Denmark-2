@@ -1,3 +1,5 @@
+import { Kinetic } from '@/components/kinetic'
+
 const principles = [
   {
     idx: '01',
@@ -25,25 +27,42 @@ export function Principles() {
   return (
     <section id="approach" className="pb-24 md:pb-32">
       <div className="mx-auto max-w-6xl px-4 md:px-6">
-        <h2 className="font-display mb-14 max-w-xl text-5xl font-bold tracking-tight text-balance md:text-7xl">
-          Brand-led. <span className="text-accent">Precision</span>-built.
-        </h2>
+        <Kinetic>
+          <h2
+            data-k="0"
+            data-kx="-60"
+            data-kskew="6"
+            className="font-display mb-14 max-w-xl text-5xl font-bold tracking-tight text-balance md:text-7xl"
+          >
+            Brand-led. <span className="text-accent">Precision</span>-built.
+          </h2>
+        </Kinetic>
 
-        <div className="divide-y divide-border border-y border-border">
-          {principles.map((p) => (
+        <Kinetic className="divide-y divide-border border-y border-border">
+          {principles.map((p, i) => (
             <div key={p.idx} className="grid gap-4 py-10 md:grid-cols-12 md:gap-8">
-              <span className="font-display text-sm font-semibold tracking-widest text-accent md:col-span-2">
+              <span
+                data-k={i}
+                data-kx="-16"
+                className="font-display text-sm font-semibold tracking-widest text-accent md:col-span-2"
+              >
                 {p.idx}
               </span>
-              <h3 className="font-display text-2xl font-bold tracking-tight text-balance md:col-span-4 md:text-3xl">
+              <h3
+                data-k={i + 0.35}
+                className="font-display text-2xl font-bold tracking-tight text-balance md:col-span-4 md:text-3xl"
+              >
                 {p.title}
               </h3>
-              <p className="leading-relaxed text-muted-foreground text-pretty md:col-span-6">
+              <p
+                data-k={i + 0.7}
+                className="leading-relaxed text-muted-foreground text-pretty md:col-span-6"
+              >
                 {p.body}
               </p>
             </div>
           ))}
-        </div>
+        </Kinetic>
       </div>
     </section>
   )

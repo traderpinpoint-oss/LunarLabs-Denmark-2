@@ -6,6 +6,7 @@ import { Work } from '@/components/work'
 import { Results } from '@/components/results'
 import { Testimonials } from '@/components/testimonials'
 import { Faq } from '@/components/faq'
+import { Contact } from '@/components/contact'
 import { SiteFooter } from '@/components/site-footer'
 
 export default function Page() {
@@ -25,6 +26,7 @@ export default function Page() {
         </div>
 
         <Faq />
+        <Contact />
       </main>
       <SiteFooter />
     </>

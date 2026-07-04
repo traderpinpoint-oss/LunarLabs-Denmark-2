@@ -1,4 +1,5 @@
 import { Star } from 'lucide-react'
+import { Kinetic } from '@/components/kinetic'
 
 const quotes = [
   {
@@ -22,15 +23,24 @@ export function Testimonials() {
   return (
     <section className="pb-24 md:pb-32">
       <div className="mx-auto max-w-6xl px-4 md:px-6">
-        <h2 className="font-display mb-14 max-w-xl text-5xl font-bold tracking-tight text-balance md:text-7xl">
-          What clients <span className="text-muted-foreground/60">send back.</span>
-        </h2>
+        <Kinetic>
+          <h2
+            data-k="0"
+            data-kx="-60"
+            data-kskew="6"
+            className="font-display mb-14 max-w-xl text-5xl font-bold tracking-tight text-balance md:text-7xl"
+          >
+            What clients <span className="text-muted-foreground/60">send back.</span>
+          </h2>
+        </Kinetic>
 
-        <div className="grid gap-4 md:grid-cols-3">
-          {quotes.map((q) => (
+        <Kinetic className="grid gap-4 md:grid-cols-3">
+          {quotes.map((q, i) => (
             <figure
               key={q.name}
-              className="flex flex-col justify-between gap-10 rounded-3xl border border-border bg-card p-7"
+              data-k={[0, 0.8, 0.4][i]}
+              data-ky={[60, 30, 45][i]}
+              className="flex flex-col justify-between gap-10 rounded-3xl border border-border bg-card p-7 transition duration-300 ease-out hover:scale-[1.02] hover:shadow-xl"
             >
               <blockquote className="text-lg leading-relaxed text-pretty">
                 {'\u201C'}
@@ -52,7 +62,7 @@ export function Testimonials() {
               </figcaption>
             </figure>
           ))}
-        </div>
+        </Kinetic>
       </div>
     </section>
   )

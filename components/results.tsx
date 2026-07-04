@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { Kinetic } from '@/components/kinetic'
 
 const stats = [
   { to: 142, dec: 0, unit: '%', label: 'Increase in online sales', src: 'Nordhavn Cycles' },
@@ -43,13 +44,25 @@ export function Results() {
   return (
     <section className="pb-24 md:pb-32">
       <div className="mx-auto max-w-6xl px-4 md:px-6">
-        <h2 className="font-display mb-14 max-w-xl text-5xl font-bold tracking-tight text-balance md:text-7xl">
-          Output you can <span className="text-accent">measure.</span>
-        </h2>
+        <Kinetic>
+          <h2
+            data-k="0"
+            data-kx="-60"
+            data-kskew="6"
+            className="font-display mb-14 max-w-xl text-5xl font-bold tracking-tight text-balance md:text-7xl"
+          >
+            Output you can <span className="text-accent">measure.</span>
+          </h2>
+        </Kinetic>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {stats.map((s) => (
-            <div key={s.label} className="rounded-3xl border border-border bg-card p-7">
+        <Kinetic className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {stats.map((s, i) => (
+            <div
+              key={s.label}
+              data-k={i * 0.5}
+              data-ky={i % 2 ? 24 : 48}
+              className="rounded-3xl border border-border bg-card p-7 transition duration-300 ease-out hover:scale-[1.02] hover:shadow-xl"
+            >
               <div className="font-display mb-4 text-5xl font-bold tracking-tight">
                 <CountUp to={s.to} dec={s.dec} />
                 <span className="text-2xl text-accent">{s.unit}</span>
@@ -58,7 +71,7 @@ export function Results() {
               <div className="text-xs text-muted-foreground">Demo · {s.src}</div>
             </div>
           ))}
-        </div>
+        </Kinetic>
       </div>
     </section>
   )
