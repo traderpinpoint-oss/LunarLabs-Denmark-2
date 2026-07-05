@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
+  basePath: '/LunarLabs-Denmark-2',
   typescript: {
     ignoreBuildErrors: true,
   },
