@@ -45,13 +45,9 @@ export function ScrollHero() {
       const mm = gsap.matchMedia()
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        /* Resting pose: heart tilted 45° reads as a coral diamond with a tight
-           shadow — scrolling resolves it upright and lifts it off the page.
-           Without JS (or with reduced motion) the static upright mark renders. */
-        gsap.set('.js-heart', { rotation: 45, filter: HEART_SHADOW_REST })
-        /* The headline rests muted and the scrub sweeps it to solid ink as
-           one unit. Opacity over the cream background reads as muted gray. */
-        gsap.set('.js-headline', { opacity: 0.2 })
+        /* Resting: a tight shadow keeps the heart sitting on the page —
+           scrolling deepens it as the mark lifts away. */
+        gsap.set('.js-heart', { filter: HEART_SHADOW_REST })
 
         // Entrance — plays once on load
         gsap
@@ -66,8 +62,10 @@ export function ScrollHero() {
           .from('.js-corner', { y: 26, opacity: 0, duration: 0.9, stagger: 0.12 }, 0.75)
 
         // Scroll choreography — stage pins for 120vh while the scrub plays.
-        // Phase 1 (0 → 0.7): the whole headline sweeps from muted to solid ink.
-        // Phase 2 (0.75 → 1.2): the headline recedes while the heart keeps rising.
+        // From 0.75 the two lines recede (fade, shear apart) while the heart
+        // keeps rising. The fade/scale lives on the line wrappers, NOT the
+        // h1: an opacity/transform on the h1 would form a stacking context
+        // and break the heart's z-position between the two lines.
         gsap
           .timeline({
             defaults: { ease: 'none' },
@@ -81,21 +79,21 @@ export function ScrollHero() {
               invalidateOnRefresh: true,
             },
           })
-          .to('.js-headline', { opacity: 1, duration: 0.7 }, 0)
           .to(
-            '.js-headline',
-            { opacity: 0.15, scale: 0.95, transformOrigin: '50% 45%', duration: 0.45 },
+            '.js-linewrap-a',
+            { xPercent: -3, skewX: -2.5, opacity: 0.15, scale: 0.97, duration: 0.45 },
             0.75,
           )
-          // the two lines shear apart as the headline recedes (kinetic drift)
-          .to('.js-linewrap-a', { xPercent: -3, skewX: -2.5, duration: 0.45 }, 0.75)
-          .to('.js-linewrap-b', { xPercent: 3, skewX: 2.5, duration: 0.45 }, 0.75)
+          .to(
+            '.js-linewrap-b',
+            { xPercent: 3, skewX: 2.5, opacity: 0.15, scale: 0.97, duration: 0.45 },
+            0.75,
+          )
           // background guides sink slower than the receding content — depth
           .to('.js-guides', { y: () => window.innerHeight * 0.06, duration: 1.2 }, 0)
           .to(
             '.js-heart',
             {
-              rotation: 0,
               x: () => window.innerWidth * 0.07,
               // 0.3x parallax of the 120vh pin distance
               y: () => window.innerHeight * -0.36,
@@ -134,13 +132,13 @@ export function ScrollHero() {
       <div ref={stageRef} className="relative flex h-svh min-h-[620px] flex-col overflow-hidden">
         {/* Diagonal guide lines with micro copy sitting along them */}
         <div className="js-guides pointer-events-none absolute inset-0" aria-hidden="true">
-          <div className="absolute top-1/2 left-[44%] w-[200vmax] -translate-x-1/2 -rotate-[68deg] border-t border-foreground/25">
+          <div className="absolute top-1/2 left-[60%] w-[200vmax] -translate-x-1/2 -rotate-[68deg] border-t border-foreground/25">
             <MicroText
               text="Innovating in your industry"
               className="absolute -top-7 left-[calc(50%+9rem)] block text-[11px] font-medium tracking-[0.14em] text-muted-foreground"
             />
           </div>
-          <div className="absolute top-[46%] left-[60%] w-[200vmax] -translate-x-1/2 rotate-[47deg] border-t border-foreground/25">
+          <div className="absolute top-[48%] left-[66%] w-[200vmax] -translate-x-1/2 rotate-[47deg] border-t border-foreground/25">
             <MicroText
               text="Don't press this heart"
               className="absolute -top-7 left-[calc(50%+5rem)] block text-[11px] font-medium tracking-[0.14em] text-muted-foreground"
@@ -153,10 +151,13 @@ export function ScrollHero() {
         <div className="relative flex flex-1 items-center px-5 md:px-10">
           <div className="relative w-full">
             <h1 className="js-headline font-display text-[clamp(2.5rem,5.3vw,6.5rem)] leading-[1.02] font-bold tracking-[-0.03em]">
-              <span className="js-linewrap-a block overflow-hidden pb-[0.06em]">
+              {/* Line 1 paints above the heart (z-20 vs z-10); line 2 below
+                  (z-0) — the h1 has no transform/opacity of its own, so all
+                  three interleave in the same stacking context. */}
+              <span className="js-linewrap-a relative z-20 block overflow-hidden pb-[0.06em]">
                 <span className="js-line block">Creative design agency,</span>
               </span>
-              <span className="js-linewrap-b block overflow-hidden pb-[0.06em]">
+              <span className="js-linewrap-b relative z-0 block overflow-hidden pb-[0.06em]">
                 <span className="js-line block">located in the heart of DENMARK.</span>
               </span>
             </h1>
@@ -165,7 +166,7 @@ export function ScrollHero() {
               type="button"
               onClick={pulseHeart}
               aria-label="A coral heart — go on, press it"
-              className="js-heart absolute top-[-30%] left-[48%] z-10 w-[clamp(140px,21vw,300px)] cursor-pointer"
+              className="js-heart absolute top-1/2 left-[63%] z-10 w-[clamp(60px,8vw,112px)] -translate-x-1/2 -translate-y-1/2 cursor-pointer"
             >
               <span className="animate-float block">
                 <svg

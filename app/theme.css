@@ -297,6 +297,43 @@
   }
 }
 
+/* Footer globe: clipped meridian lines scroll by exactly one line-spacing
+   (19 SVG units) so the rotation loops seamlessly; the Denmark pin stays
+   fixed while an accent ring pulses outward from it. */
+@keyframes globe-spin {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-19px);
+  }
+}
+.animate-globe-spin {
+  animation: globe-spin 6s linear infinite;
+}
+@keyframes pin-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  70%,
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+.animate-pin-ping {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pin-ping 2.4s ease-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-globe-spin,
+  .animate-pin-ping {
+    animation: none;
+  }
+}
+
 /* Continuous marquee for the partner strip */
 @keyframes marquee {
   from {

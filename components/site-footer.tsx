@@ -37,7 +37,7 @@ export function SiteFooter() {
       </Kinetic>
 
       {/* Footer grid */}
-      <div className="mx-auto mt-24 grid max-w-6xl gap-10 border-t border-border px-4 py-14 sm:grid-cols-3 md:px-6">
+      <div className="mx-auto mt-24 grid max-w-6xl gap-10 border-t border-border px-4 py-14 sm:grid-cols-2 md:grid-cols-[1.2fr_1fr_1fr_auto] md:px-6">
         <div>
           <div className="font-display text-lg font-bold tracking-tight">
             LUNAR<span className="text-accent">LABS</span>
@@ -79,6 +79,32 @@ export function SiteFooter() {
             ))}
           </ul>
         </nav>
+
+        {/* Spinning line-art globe, pinned on Denmark — pure CSS loop */}
+        <div className="md:justify-self-end" aria-hidden="true">
+          <div className="w-36 md:w-44">
+            <svg viewBox="0 0 100 100" className="h-auto w-full" fill="none">
+              <defs>
+                <clipPath id="globe-clip">
+                  <circle cx="50" cy="50" r="38" />
+                </clipPath>
+              </defs>
+              <g clipPath="url(#globe-clip)" className="stroke-foreground/25">
+                <g className="animate-globe-spin">
+                  {[-7, 12, 31, 50, 69, 88, 107].map((x) => (
+                    <path key={x} d={`M${x} 12 C${x + 7} 31 ${x + 7} 69 ${x} 88`} strokeWidth="1" />
+                  ))}
+                </g>
+                <path d="M12 50 H88" strokeWidth="1" />
+                <path d="M17 31 H83" strokeWidth="1" />
+                <path d="M17 69 H83" strokeWidth="1" />
+              </g>
+              <circle cx="50" cy="50" r="38" className="stroke-foreground/40" strokeWidth="1.5" />
+              <circle cx="58" cy="26" r="3.2" className="fill-coral" />
+              <circle cx="58" cy="26" r="5" className="animate-pin-ping stroke-coral" strokeWidth="1.5" />
+            </svg>
+          </div>
+        </div>
       </div>
 
       {/* Giant wordmark, mirrored beneath a faint waterline — the wordmark and
